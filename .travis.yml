@@ -1,0 +1,21 @@
+language: R
+r:
+  - devel
+  - "3.4"
+  - "3.3"
+
+sudo: false
+cache: packages
+warnings_are_errors: true
+
+r_packages:
+  - covr
+
+services:
+  - mongodb
+
+before_script:
+  - bash tests/download_datasets
+
+after_success:
+  - Rscript -e 'covr::coveralls()'
