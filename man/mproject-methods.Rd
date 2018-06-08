@@ -13,7 +13,7 @@ mproject(p, ...)
 \arguments{
 \item{p}{A \linkS4class{MongoPipeline} instance.}
 
-\item{...}{Named arguments for mproject fields, indicating whether to include (1) or exclude (0)}
+\item{...}{Named arguments for mproject fields, indicating whether to include (1) or exclude (0), or functions of fields}
 }
 \value{
 A copy of the previous pipeline, with the new stage added.

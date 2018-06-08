@@ -1,6 +1,7 @@
 #' @import methods
 #' @import magrittr
 #' @import mongolite
+#' @import tibble
 NULL
 
 mongoPrimitiveOps = c("&"
@@ -322,6 +323,8 @@ setMethod("msort", signature(p = "MongoPipeline"),
 #' @export
 setGeneric("mproject", function(p, ...) standardGeneric("mproject"))
 
+#' @rdname mproject-methods
+#' @aliases mproject,MongoPipeline-method
 setMethod("mproject", signature(p = "MongoPipeline"),
           function(p, ...)
           {
@@ -354,5 +357,5 @@ setMethod("mexecute", signature(p = "MongoPipeline"),
             frame <- client$aggregate(pipeline)
             flattenedFrame <- jsonlite::flatten(frame)
             colnames(flattenedFrame) <- gsub("^_id", "id", colnames(flattenedFrame))
-            flattenedFrame
+            as.tibble(flattenedFrame)
           })

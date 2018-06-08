@@ -11,6 +11,7 @@ test_that("execute works with a multistep pipeline",
 		mlimit(5) %>%
 		mexecute(conn) -> data
 
-	expect_equal(iconv(data$id, to = "UTF-8"), c("American", "Café/Coffee/Tea", "Italian", "Chinese", "Japanese"))
+	# expect_equal(iconv(data$id, to = "UTF-8"), c("American", "Café/Coffee/Tea", "Italian", "Chinese", "Japanese"))
+  expect_equal(data$id, c("American", "Café/Coffee/Tea", "Italian", "Chinese", "Japanese"))
 	expect_equal(data$count, c(3205, 680, 621, 510, 438))
 })
