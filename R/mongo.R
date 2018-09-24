@@ -172,6 +172,7 @@ mongoAstToList <- function(ast)
                      "month" = {renderFunc},
                      "dayOfMonth" = {renderFunc},
                      "hour" = {renderFunc},
+                     "minute" = {renderFunc},
                      "floor" = {renderFunc},
                      "ceil" = {renderFunc},
                      "ln" = {renderFunc},
