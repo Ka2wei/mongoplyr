@@ -295,6 +295,36 @@ setMethod("munwind", signature(p = "MongoPipeline"),
             p@stages <- c(p@stages, createStage("unwind", mongoAstToList(arg)))
             p
           })
+           
+#' Add a $lookup stage to a MongoPipeline.
+#' @param p A \linkS4class{MongoPipeline} instance.
+#' @param from Specifies the collection in the same database to perform the join with
+#' @param localField 	Specifies the field from the documents input to the $lookup stage.
+#' @param foreignField Specifies the field from the documents in the from collection
+#' @param as Specifies the name of the new array field to add to the input documents
+#' @return A copy of the previous pipeline, with the new stage added.
+#' @rdname mlookup-methods
+#' @export
+setGeneric("mlookup", function(p, from, localField, foreignField, as) standardGeneric("mlookup"))
+
+#' @rdname mlookup-methods
+#' @aliases mlookup,MongoPipeline-method
+setMethod("mlookup", signature(p = "MongoPipeline"),
+          function(p, from, localField, foreignField, as)
+          {
+            subbedArgs <- list()
+            subbedArgs[["from"]] = substitute(from)
+            subbedArgs[["localField"]] = substitute(localField)
+            subbedArgs[["foreignField"]] = substitute(foreignField)
+            subbedArgs[["as"]] = substitute(as)
+            
+            parser <- exprParser()
+            asts <- lapply(subbedArgs, function(a) { parser(a, dollarForMemberAccess = T) })
+            argList <- lapply(asts, mongoAstToList)
+            
+            p@stages <- c(p@stages, createStage("lookup", argList))
+            p
+          })
 
 #' Add a $sort stage to a MongoPipeline.
 #' @param p A \linkS4class{MongoPipeline} instance.
