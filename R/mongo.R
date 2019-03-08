@@ -17,6 +17,7 @@ mongoPrimitiveOps = c("&"
                       , "-"
                       , "/"
                       , "*"
+                      , "%%"
 )
 
 exprParser <- function()
@@ -163,6 +164,7 @@ mongoAstToList <- function(ast)
                      "*" = { arrayExpr("multiply") },
                      "/" = { arrayExpr("divide", 2) },
                      "%in%" = { binaryExpr("in", T) },
+                     "%%" = { binaryExpr("exists") },
                      "substr" = { arrayExpr("substr", 3) },
                      
                      # Project Functions
